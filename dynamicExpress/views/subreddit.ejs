@@ -13,6 +13,7 @@
 
 <body>
 
+    <!-- Spread properties from the JS file can now be invoked within the EJS tags -->
     <h1> Browsing The <%= name %> Subreddit </h1>
     <h2>
         <%= description %>
@@ -22,9 +23,12 @@
     </h3>
     <hr>
 
+    <!-- loops can be created within EJS tags, here a for of loop for arrays is used to loop through the posts array, within the chickens object    -->
     <% for(let post of posts) { %>
         <article>
+            <!-- post is now an object which can return properties within the post array, like title and author -->
             <p> <%= post.title %> - <b> <%= post.author %> </b> </p> 
+            <!-- if the post array contains an img, then return the img -->
             <% if(post.img) { %>
                 <img src="<%= post.img %>" alt="">
             <% } %>

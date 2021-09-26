@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const path = require('path');
+// requiring data.json file (require creates a)
 const redditData = require('./data.json');
 
 // app.use will run everytime any request is received, regardless of get/post etc... (type of middleware). Passes in an argument of the folder ('public') that we want to serve our assets from. 
@@ -40,10 +41,14 @@ app.get('/cats', (req, res) => {
 // Example where subreddit parameter is deconstructed as an  object then used in the response to display the provided path parameter
 // If subreddit exists in data.json, then render requested data - Else return an error page saying we can't find that path ('/r/')
 app.get('/r/:subreddit', (req, res) => {
+    // create object with req param
     const { subreddit } = req.params;
+    // qppend subreddit param to the redditData object, so that specific data can be called
     const data = redditData[subreddit];
+    // if data exists, then render result of subreddit data, spread the result (object) so each property within it can be called in the ejs file
     if (data) {
         res.render('subreddit', { ...data })
+    // else say you can't find the subreddit entered
     } else {
         res.render('notfound', { subreddit })
     }
