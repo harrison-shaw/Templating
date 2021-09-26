@@ -3,10 +3,17 @@ const app = express();
 const path = require('path');
 const redditData = require('./data.json');
 
+// app.use will run everytime any request is received, regardless of get/post etc... (type of middleware). Passes in an argument of the folder ('public') that we want to serve our assets from. 
+app.use(express.static(path.join(__dirname, '/public')))
 
+// *************
+// Configuring EJS
+// ****************
 //EJS does not need to be 'required' - Instead express will require it behind the scenes and it can be invoked by  declaring 'view engine' as an argument for the set method.
 // EJS assumes our 'views' (templates), exist in a directory called 'views'  - the file within 'views' needs to end with .ejs, this file contains standard HTML
+
 app.set('view engine', 'ejs');
+
 
 // Set the views directory by taking the current directory 'Templating' and joining it with the 'views' path 
 app.set('views', path.join(__dirname, '/views'))
@@ -16,6 +23,13 @@ app.get('/', (req, res) => {
     res.render('home')
 });
 
+
+// **************************************************
+// **************************************************
+
+
+
+// Example where an array is decalred and then accessed when rendering a response 
 app.get('/cats', (req, res) => {
     const cats = [
         'Blue', 'Rocket', 'Monty', 'Stephanie', 'Winston'
